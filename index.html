@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="keywords" content="Ari Petäjäjärvi, ping pong, reactjs, nodejs">
+		<meta name="description" content="Ping Pong">
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="css/styles.css">
+		<script src="js/jquery-1.11.3.min.js"></script>
+		<script src="js/require.js"></script>
+		<script src="js/pong.js"></script>
+
+		<script>
+			$(document).ready(function() {				
+				var pingPongGame = new Pong({wrapper_id : 'game_wrapper'});				
+			});
+		</script>
+	</head>
+	<body>
+		<header id="game_nav_header"><nav><a href="javascript:void(0);">Asetukset</a><a href="javascript:void(0);">Tiedot</a></nav></header>
+		<div id="game_wrapper"></div>
+	</body>
+</html>
