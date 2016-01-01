@@ -45,7 +45,7 @@ define(function () {
 			this.c = '#000000';
 			this.rad = 10;
 			this.xVs = 3;
-			this.yVs = 7;
+			this.yVs = 6;
 		}
 	};
 
@@ -112,7 +112,7 @@ define(function () {
 					{
 						console.log('RESET EVENT');
 						canvas.removeEventListener('click', beginBtn.clickButton,false );
-						window.dispatchEvent(RESET_GAME_EVENT);						
+						window.dispatchEvent(window.RESET_GAME_EVENT);						
 						canvas.removeEventListener('click', this.clickButton,false );
 					}
 				}
@@ -236,7 +236,7 @@ define(function () {
 					if( GAME_STATE === 'STOP' )
 					{
 						console.log('BEGIN EVENT');
-						window.dispatchEvent(BEGIN_GAME_EVENT);
+						window.dispatchEvent(window.BEGIN_GAME_EVENT);
 						canvas.removeEventListener('click', this.clickButton,false );
 					}
 				}

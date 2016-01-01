@@ -1,7 +1,14 @@
 var Pong = function( prop )
 {
+	// GLOBALS
+	window.requestFrame = null;
+	
 	require(['js/modules/game_objects.js'], function(gameOM) {
-		
+		initGame( gameOM ) 
+	});
+
+	function initGame( gameOM ) 
+	{	
 		window.requestFrame = (function() {
 			return  window.requestAnimationFrame   || 
 				window.webkitRequestAnimationFrame || 
@@ -26,19 +33,26 @@ var Pong = function( prop )
 		var wrapper_id = prop.wrapper_id;
 		var mainNavElem = document.getElementById('game_nav_header') ? document.getElementById('game_nav_header') : null;
 
-		// GLOBALS
-		this.GAME_STATE = "ACTIVE"; // ACTIVE, STOP
-		this.RESET_GAME_EVENT = new Event('RESET_GAME');
-		this.BEGIN_GAME_EVENT = new Event('BEGIN_GAME');
-		this.POINTS = 0;	
-
 		// game components object
 		var gameObjects = gameOM;		
 		var windowW = gameObjects.windowW;
 		var windowH = gameObjects.windowH;
-		var canvas = gameObjects.canvas;
+		var canvas = null;
 		var ctx = gameObjects.ctx;
 		
+		this.GAME_STATE = "ACTIVE"; // ACTIVE, STOP
+		window.RESET_GAME_EVENT = new Event('RESET_GAME');
+		window.BEGIN_GAME_EVENT = new Event('BEGIN_GAME');
+		this.POINTS = 0;
+
+
+		if( document.getElementById('canvas_game') )
+		{
+			var canvas = document.getElementById('canvas_game');
+			canvas.parentNode.removeChild(canvas);			
+		}
+		
+		var canvas = gameObjects.canvas;
 		var canvas_wrapper = document.getElementById( wrapper_id );
 		if( typeof canvas_wrapper != 'undefined' && canvas_wrapper)
 		{
@@ -47,7 +61,8 @@ var Pong = function( prop )
 		else
 		{
 			document.body.appendChild( canvas );
-		}	
+		}		
+			
 
 		canvas.addEventListener('mousemove', trackAndUpdate, false);
 		document.addEventListener('keydown', trackKeyAndUpdate, false);
@@ -329,5 +344,5 @@ var Pong = function( prop )
 			beginBtn.draw();			
 
 		}
-	});
+	}
 }
