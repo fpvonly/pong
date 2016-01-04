@@ -1,3 +1,7 @@
+/*
+	Author: Ari Petäjäjärvi
+	copyright 2016
+*/
 var Pong = function( prop )
 {
 	// GLOBALS

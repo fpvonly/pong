@@ -1,3 +1,8 @@
+/*
+	Author: Ari Petäjäjärvi
+	copyright 2016
+*/
+
 // init the canvas game logic
 var pingPongGame = new Pong({wrapper_id : 'game_wrapper'});
 
@@ -75,11 +80,12 @@ var MainMenu = React.createClass({
 		this.refs.sub_menu.setState({open:true, menuTitle:title, content:c});		
 	},
 	getInfoPanelContent: function() {
-		var c = 'This is a simple ping pong game created using HTML5\'s Canvas element\n and plain Javascript. ';
+		var c = 'This is a simple ping-pong game created using HTML5\'s Canvas element\n and plain Javascript. ';
 		c += 'The main UI is created using React. ';
 		c += 'Behind all this is running a Node.js server using Express framework. ';
 		c += 'All animations are CSS3 animations exluding the game animations which are made in plain Javascript.\n\n';
-		c += 'In future updates the following features are to be added: settings panel (localstorage saving), scoreboard (database saving) and multiplayer mode. ';
+		c += 'In future updates the following features are to be added: settings panel (localstorage saving), scoreboard (database saving) and multiplayer mode. \n\n';
+		c += 'NOTE: This game is made for modern desktop browsers that support Javascript and Canvas APIs properly. ';
 		return c;
 	},
 	getLeaderboardPanelContent: function() {

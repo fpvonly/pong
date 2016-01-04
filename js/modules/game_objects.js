@@ -1,3 +1,7 @@
+/*
+	Author: Ari Petäjäjärvi
+	copyright 2016
+*/
 define(function () {
 
 	this.windowW = window.innerWidth;
@@ -90,7 +94,7 @@ define(function () {
 			this.coords.X_a = ( window.innerWidth/2 )	- 150;	
 			this.coords.X_b = ( window.innerWidth/2 )	+ 150;	
 			this.coords.Y_a = ( window.innerHeight/2 )	- 150;	
-			this.coords.Y_b = ( window.innerWidth/2 )	+ 150;	
+			this.coords.Y_b = ( window.innerHeight/2 )	+ 150;	
 			 
 			restart_btn = this; // for event handler functions
 			
@@ -214,7 +218,7 @@ define(function () {
 			this.coords.X_a = ( window.innerWidth/2 )	- 150;	
 			this.coords.X_b = ( window.innerWidth/2 )	+ 150;	
 			this.coords.Y_a = ( window.innerHeight/2 )	- 150;	
-			this.coords.Y_b = ( window.innerWidth/2 )	+ 150;	
+			this.coords.Y_b = ( window.innerHeight/2 )	+ 150;	
 			 
 			restart_btn = this; // for event handler functions
 			
