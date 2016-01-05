@@ -77,7 +77,11 @@ var MainMenu = React.createClass({
 			break;
 		}	
 
-		this.refs.sub_menu.setState({open:true, menuTitle:title, content:c});		
+		this.refs.sub_menu.setState({open:true, menuTitle:title, content:c});	
+
+		// hack for IEs redrawing bug in the main menu
+		document.getElementById('fixed_wrapper').style.opacity='0.99';
+		setTimeout( function(){ document.getElementById('fixed_wrapper').style.opacity='1'; }, 300 );	
 	},
 	getInfoPanelContent: function() {
 		var c = 'This is a simple ping-pong game created using HTML5\'s Canvas element\n and plain Javascript. ';
@@ -85,17 +89,19 @@ var MainMenu = React.createClass({
 		c += 'Behind all this is running a Node.js server using Express framework. ';
 		c += 'All animations are CSS3 animations exluding the game animations which are made in plain Javascript.\n\n';
 		c += 'In future updates the following features are to be added: settings panel (localstorage saving), scoreboard (database saving) and multiplayer mode. \n\n';
-		c += 'NOTE: This game is made for modern desktop browsers that support Javascript and Canvas APIs properly. ';
+		c += 'NOTE: This game is made for modern desktop browsers that support Javascript and Canvas APIs properly.';
+		c += 'It is tested on IE10, IE11, Edge, Chrome and Firefox desktop browsers.';
+
 		return c;
 	},
 	getLeaderboardPanelContent: function() {
-		return 'Under development';
+		return 'Under development.';
 	},
 	getMultiplayerPanelContent: function() {
-		return 'Under development';
+		return 'Under development. ETA:TBA';
 	},
 	getSettingsPanelContent: function() {
-		return 'Under development';
+		return 'Under development.';
 	},
 	render: function() {
 		return <div id="main_menu" className={ (this.state.open) ? 'active' : '' }>
@@ -131,6 +137,10 @@ var SubMenu = React.createClass({
 	},
 	closeSubMenu: function() {
 		this.setState({open:false});
+		// hack for IEs redrawing bug
+		document.getElementById('fixed_wrapper').style.opacity='0.99';
+		setTimeout( function(){ document.getElementById('fixed_wrapper').style.opacity='1'; }, 300 );
+		
 	},
 	render: function() {
 		return <div id="sub_menu" className={ (this.state.open) ? 'active' : '' } ref="sub_menu_div">			

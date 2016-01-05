@@ -2,13 +2,25 @@
 	Author: Ari Petäjäjärvi
 	copyright 2016
 */
+
+// For custom events in IE
+(function () {
+  function CustomEvent ( event, params ) {
+    params = params || { bubbles: false, cancelable: false, detail: undefined };
+    var evt = document.createEvent( 'CustomEvent' );
+    evt.initCustomEvent( event, params.bubbles, params.cancelable, params.detail );
+    return evt;
+   }
+  CustomEvent.prototype = window.Event.prototype;
+  window.CustomEvent = CustomEvent;
+})();
+
 var Pong = function( prop )
-{
-	// GLOBALS
+{	
 	window.requestFrame = null;
 	
-	require(['js/modules/game_objects.js'], function(gameOM) {
-		initGame( gameOM ) 
+	require(['js/modules/game_objects.js'], function(gameOM) {		
+		initGame( gameOM );
 	});
 
 	function initGame( gameOM ) 
@@ -45,10 +57,9 @@ var Pong = function( prop )
 		var ctx = gameObjects.ctx;
 		
 		this.GAME_STATE = "ACTIVE"; // ACTIVE, STOP
-		window.RESET_GAME_EVENT = new Event('RESET_GAME');
-		window.BEGIN_GAME_EVENT = new Event('BEGIN_GAME');
 		this.POINTS = 0;
-
+		window.RESET_GAME_EVENT = new CustomEvent('RESET_GAME');
+		window.BEGIN_GAME_EVENT = new CustomEvent('BEGIN_GAME');
 
 		if( document.getElementById('canvas_game') )
 		{
@@ -332,21 +343,21 @@ var Pong = function( prop )
 
 		function resizeCanvas(e) 
 		{			
+			//setTimeout(function() {
+				mainNavElem.style.display = 'block';
+				GAME_STATE = 'STOP';
+				canvas.width = window.innerWidth;
+				canvas.height = window.innerHeight;
+				windowW = window.innerWidth;
+				windowH = window.innerHeight;
+				Ball.reset();
+				paddles[0].reset();
+				paddles[1].reset();
 
-			mainNavElem.style.display = 'block';
-			GAME_STATE = 'STOP';
-			canvas.width = windowW;
-			canvas.height = windowH;
-			windowW = window.innerWidth;
-			windowH = window.innerHeight;
-			Ball.reset();
-			paddles[0].reset();
-			paddles[1].reset();
+				cancelRequestFrame( initGameAnimation );
 
-			cancelRequestFrame( initGameAnimation );
-
-			beginBtn.draw();			
-
+				beginBtn.draw();			
+			//}, 2000);
 		}
 	}
 }

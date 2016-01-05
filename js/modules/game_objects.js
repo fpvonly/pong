@@ -8,13 +8,12 @@ define(function () {
 	this.windowH = window.innerHeight;
 
 	this.canvas = document.createElement('canvas');
-	canvas.id = 'canvas_game';
-	canvas.width = windowW;
-	canvas.height = windowH;
+	this.canvas.id = 'canvas_game';
+	this.canvas.width = window.innerWidth;
+	this.canvas.height = window.innerHeight;
 	//canvas.style.cursor = 'none';
-	
 
-	this.ctx = canvas.getContext('2d');
+	this.ctx = this.canvas.getContext('2d');
 
 	this.paddles = [];
 
@@ -96,7 +95,7 @@ define(function () {
 			this.coords.Y_a = ( window.innerHeight/2 )	- 150;	
 			this.coords.Y_b = ( window.innerHeight/2 )	+ 150;	
 			 
-			restart_btn = this; // for event handler functions
+			//restart_btn = this; // for event handler functions
 			
 			canvas.removeEventListener('click', beginBtn.clickButton,false );
 			canvas.removeEventListener('click', this.clickButton,false );
@@ -108,9 +107,9 @@ define(function () {
 			var x = e.pageX;
 			var y = e.pageY;
 			
-			if( x >= restart_btn.coords.X_a && x <= restart_btn.coords.X_b )
+			if( x >= restartBtn.coords.X_a && x <= restartBtn.coords.X_b )
 			{
-				if( y >= restart_btn.coords.Y_a && y <= restart_btn.coords.Y_b )
+				if( y >= restartBtn.coords.Y_a && y <= restartBtn.coords.Y_b )
 				{
 					if( GAME_STATE === 'STOP' )
 					{
@@ -127,13 +126,13 @@ define(function () {
 			var x = e.clientX;
 			var y = e.clientY;
 						
-			if( x >= restart_btn.coords.X_a && x <= restart_btn.coords.X_b )
+			if( x >= restartBtn.coords.X_a && x <= restartBtn.coords.X_b )
 			{
-				if( y >= restart_btn.coords.Y_a && y <= restart_btn.coords.Y_b )
+				if( y >= restartBtn.coords.Y_a && y <= restartBtn.coords.Y_b )
 				{
 					if( GAME_STATE === 'STOP' )
 					{
-						clearInterval(restart_btn.animInterval);						
+						clearInterval(restartBtn.animInterval);						
 						over();				
 					}
 				}
@@ -141,7 +140,7 @@ define(function () {
 				{
 					if( GAME_STATE === 'STOP' )
 					{
-						clearInterval(restart_btn.animInterval);						
+						clearInterval(restartBtn.animInterval);						
 						out();
 					}
 				}
@@ -150,7 +149,7 @@ define(function () {
 			{
 				if( GAME_STATE === 'STOP' )
 				{
-					clearInterval(restart_btn.animInterval);					
+					clearInterval(restartBtn.animInterval);					
 					out();
 				}
 			}
@@ -220,7 +219,7 @@ define(function () {
 			this.coords.Y_a = ( window.innerHeight/2 )	- 150;	
 			this.coords.Y_b = ( window.innerHeight/2 )	+ 150;	
 			 
-			restart_btn = this; // for event handler functions
+			//restart_btn = this; // for event handler functions
 			
 			canvas.removeEventListener('click', restartBtn.clickButton,false );
 			canvas.removeEventListener('click', this.clickButton,false );
