@@ -1,6 +1,6 @@
 /*
 	Author: Ari Petäjäjärvi
-	copyright 2016
+	2016
 */
 define(function () {
 

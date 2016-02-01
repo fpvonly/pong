@@ -1,7 +1,20 @@
 /*
 	Author: Ari Petäjäjärvi
-	copyright 2016
+	2016
 */
+
+// helper function for accessing local storage data
+var getLocalStorageValByKey = function( key ) 
+{
+	if(typeof(Storage) !== "undefined") 
+	{
+		return localStorage.getItem(key);
+	}
+	else
+	{
+		return null;
+	}
+}
 
 // init the canvas game logic
 var pingPongGame = new Pong({wrapper_id : 'game_wrapper'});
@@ -39,6 +52,17 @@ var MenuBar = React.createClass({
 		return <nav id="navigation"><div><a ref="main_menu_btn" className={ (this.state.open) ? 'active' : '' } href="javascript:void(0);" onClick={this.handleMenuBtnClick}>&#9776; Menu</a></div></nav>;
 	}
 });
+
+
+var MainMenuBtn = React.createClass({
+	getInitialState: function() {
+		return null;
+	},
+	render: function() {
+		return <div className="main_menu_btn" onClick={this.props.clickObj}>{this.props.text}</div>
+	}
+});
+
 
 var MainMenu = React.createClass({
 	getInitialState: function() {
@@ -88,8 +112,8 @@ var MainMenu = React.createClass({
 		c += 'The main UI is created using React. ';
 		c += 'Behind all this is running a Node.js server using Express framework. ';
 		c += 'All animations are CSS3 animations exluding the game animations which are made in plain Javascript.\n\n';
-		c += 'In future updates the following features are to be added: settings panel (localstorage saving), scoreboard (database saving) and multiplayer mode. \n\n';
-		c += 'NOTE: This game is made for modern desktop browsers that support Javascript and Canvas APIs properly.';
+		c += 'Settings are stored in local storage. \n\n';
+		c += 'NOTE: This game is made for modern desktop browsers that support Javascript and Canvas APIs properly. ';
 		c += 'It is tested on IE10, IE11, Edge, Chrome and Firefox desktop browsers.';
 
 		return c;
@@ -101,7 +125,13 @@ var MainMenu = React.createClass({
 		return 'Under development. ETA:TBA';
 	},
 	getSettingsPanelContent: function() {
-		return 'Under development.';
+		return <div>
+			<ColorPicker id="top_paddle_color_pick" label="Top paddle color:" />
+			<ColorPicker id="bottom_paddle_color_pick" label="Bottom paddle color:" /> 
+			<ColorPicker id="ball_color_pick" label="Ball color:"/>	
+			<ColorPicker id="top_header_color_pick" label="Main menu header color:" /> 
+			<ColorPicker id="bg_color_pick" label="Game Background color:" />			
+		</div>;
 	},
 	render: function() {
 		return <div id="main_menu" className={ (this.state.open) ? 'active' : '' }>
@@ -118,14 +148,6 @@ var MainMenu = React.createClass({
 	}
 });
 
-var MainMenuBtn = React.createClass({
-	getInitialState: function() {
-		return null;
-	},
-	render: function() {
-		return <div className="main_menu_btn" onClick={this.props.clickObj}>{this.props.text}</div>
-	}
-});
 
 var SubMenu = React.createClass({
 	getInitialState: function() {
@@ -148,6 +170,35 @@ var SubMenu = React.createClass({
 			<h1>{this.state.menuTitle}</h1>
 			<div className="sub_menu_content_panel">{this.state.content}</div>
 		</div>
+	}
+});
+
+
+var ColorPicker = React.createClass({
+	saveSettingsAndUpdateGameVisuals: function( color ) {
+		if(typeof(Storage) !== "undefined") {
+			var dom_object = this.refs.picker;
+    		localStorage.setItem(dom_object.id, color);
+    		
+    		console.log(dom_object.id +': ' +color);
+    		
+    		window.dispatchEvent(window.RESET_GAME_EVENT);
+		} else {
+		    alert('No local storage support! Update browser.');
+		}	
+	},
+	componentDidMount: function() {
+		var reactContext = this;
+		var input = this.refs.picker;	
+		var color = ( getLocalStorageValByKey( input.id ) === null ? '000000' : getLocalStorageValByKey( input.id ) );
+		var picker = new jscolor( input, { value:color, onFineChange:function(){ reactContext.saveSettingsAndUpdateGameVisuals( this ); } } );
+        //picker.fromHSV(360 / 100 * i, 100, 100);
+ 	},
+ 	render: function() { 		
+		return <div className="color_picker_row">
+			<div className="color_picker_label">{this.props.label}</div>
+			<input id={this.props.id} ref="picker" className="jscolor" />
+			</div>
 	}
 });
 
