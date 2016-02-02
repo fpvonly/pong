@@ -20,7 +20,7 @@ define(function () {
 	this.Ball = {
 		x:15,
 		y:25,
-		c:'#000000',
+		c:'#'+ ( getLocalStorageValByKey( 'ball_color_pick' ) === null ? '000000' : getLocalStorageValByKey( 'ball_color_pick' ) ),
 		rad:10,
 		xVs:3,
 		yVs:6,
@@ -45,7 +45,7 @@ define(function () {
 		{
 			this.x = 15;
 			this.y = 25;
-			this.c = '#000000';
+			this.c = '#'+ ( getLocalStorageValByKey( 'ball_color_pick' ) === null ? '000000' : getLocalStorageValByKey( 'ball_color_pick' ) );
 			this.rad = 10;
 			this.xVs = 3;
 			this.yVs = 6;
@@ -55,20 +55,20 @@ define(function () {
 	this.Paddle = function( position )
 	{
 		 this.h = 10;
-		 this.w = 150;
-
+		 this.w = 150;		 
 		 this.x = windowW/2 - this.w/2;
 		 this.y = ( position == 'bottom' ) ? windowH-this.h : 0;
-
+		 this.position = position;
+		 this.c = '#' + ( getLocalStorageValByKey( this.position+'_paddle_color_pick' ) === null ? '000000' : getLocalStorageValByKey( this.position+'_paddle_color_pick' ) );
 		 this.hit = false;
 
 		 this.reset = function() {
 		 	this.h = 10;
 			this.w = 150;
 		 	this.x = window.innerWidth/2 - this.w/2;
-		 	this.y = ( position == 'bottom' ) ? window.innerHeight-this.h : 0;
-		 }
-		 //console.log('Position: ' + position + ', x: ' + this.x + ', y: ' + this.y);
+		 	this.y = (this.position == 'bottom' ) ? window.innerHeight-this.h : 0;
+		 	this.c = '#'+ ( getLocalStorageValByKey(  this.position+'_paddle_color_pick' ) === null ? '000000' : getLocalStorageValByKey(  this.position+'_paddle_color_pick' ) );
+		 }		 
 	};
 
 	this.restartBtn = {
@@ -201,7 +201,7 @@ define(function () {
 		animInterval: null,
 		draw: function() {
 			ctx.beginPath();
-			ctx.fillStyle = '#ffffff';
+			ctx.fillStyle = '#' + ( getLocalStorageValByKey( 'bg_color_pick' ) === null ? 'ffffff' : getLocalStorageValByKey( 'bg_color_pick' ) );
 			ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
 			ctx.fillStyle = '#000000';

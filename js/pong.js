@@ -15,6 +15,20 @@
   window.CustomEvent = CustomEvent;
 })();
 
+// helper function for accessing local storage data
+var getLocalStorageValByKey = function( key ) 
+{
+	if( typeof( Storage ) !== "undefined" ) 
+	{
+		return localStorage.getItem(key);
+	}
+	else
+	{
+		return null;
+	}
+}
+
+
 var Pong = function( prop )
 {	
 	window.requestFrame = null;
@@ -106,6 +120,11 @@ var Pong = function( prop )
 		resetGame(); // start game
 
 
+
+
+
+
+
 		// DRAWING FUNCTIONS
 
 		function drawGameCanvasFrame() 
@@ -122,7 +141,7 @@ var Pong = function( prop )
 
 		function drawCanvasBackground() 
 		{
-			ctx.fillStyle = '#ffffff';
+			ctx.fillStyle = '#' + ( getLocalStorageValByKey( 'bg_color_pick' ) === null ? 'ffffff' : getLocalStorageValByKey( 'bg_color_pick' ) );
 			ctx.fillRect(0, 0, windowW, windowH);
 		}
 
@@ -133,7 +152,7 @@ var Pong = function( prop )
 			{
 				paddle = paddles[i];
 
-				ctx.fillStyle = '#000000';
+				ctx.fillStyle = paddle.c;
 				ctx.fillRect( paddle.x, paddle.y, paddle.w, paddle.h );
 				//console.log('Paddle:  x: ' + paddle.x + ', y: ' + paddle.y + ', w: ' + paddle.w + ', h: ' + paddle.h );
 			}
@@ -318,6 +337,7 @@ var Pong = function( prop )
 
 		function resetGame()
 		{			
+			mainNavElem.style.background = '#' + ( getLocalStorageValByKey( 'top_header_color_pick' ) === null ? '000000' : getLocalStorageValByKey( 'top_header_color_pick' ) );
 			mainNavElem.style.display = 'block';
 			GAME_STATE = 'STOP';
 			Ball.reset();

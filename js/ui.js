@@ -6,7 +6,7 @@
 // helper function for accessing local storage data
 var getLocalStorageValByKey = function( key ) 
 {
-	if(typeof(Storage) !== "undefined") 
+	if( typeof( Storage ) !== "undefined" ) 
 	{
 		return localStorage.getItem(key);
 	}
@@ -179,12 +179,9 @@ var ColorPicker = React.createClass({
 		if(typeof(Storage) !== "undefined") {
 			var dom_object = this.refs.picker;
     		localStorage.setItem(dom_object.id, color);
-    		
-    		console.log(dom_object.id +': ' +color);
-    		
     		window.dispatchEvent(window.RESET_GAME_EVENT);
 		} else {
-		    alert('No local storage support! Update browser.');
+		    alert('No localstorage support! Update the browser.');
 		}	
 	},
 	componentDidMount: function() {
