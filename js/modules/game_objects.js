@@ -132,7 +132,7 @@ define(function () {
 				{
 					if( GAME_STATE === 'STOP' )
 					{
-						clearInterval(restartBtn.animInterval);						
+						//clearInterval(restartBtn.animInterval);						
 						over();				
 					}
 				}
@@ -140,7 +140,7 @@ define(function () {
 				{
 					if( GAME_STATE === 'STOP' )
 					{
-						clearInterval(restartBtn.animInterval);						
+						//clearInterval(restartBtn.animInterval);						
 						out();
 					}
 				}
@@ -149,7 +149,7 @@ define(function () {
 			{
 				if( GAME_STATE === 'STOP' )
 				{
-					clearInterval(restartBtn.animInterval);					
+					//clearInterval(restartBtn.animInterval);					
 					out();
 				}
 			}
@@ -256,7 +256,7 @@ define(function () {
 				{
 					if( GAME_STATE === 'STOP' )
 					{
-						clearInterval(beginBtn.animInterval);						
+						//clearInterval(beginBtn.animInterval);						
 						over();				
 					}
 				}
@@ -264,7 +264,7 @@ define(function () {
 				{
 					if( GAME_STATE === 'STOP' )
 					{
-						clearInterval(beginBtn.animInterval);						
+						//clearInterval(beginBtn.animInterval);						
 						out();
 					}
 				}
@@ -273,7 +273,7 @@ define(function () {
 			{
 				if( GAME_STATE === 'STOP' )
 				{
-					clearInterval(beginBtn.animInterval);					
+					//clearInterval(beginBtn.animInterval);					
 					out();
 				}
 			}

@@ -111,10 +111,10 @@ var MainMenu = React.createClass({
 		var c = 'This is a simple ping-pong game created using HTML5\'s Canvas element\n and plain Javascript. ';
 		c += 'The main UI is created using React. ';
 		c += 'Behind all this is running a Node.js server using Express framework. ';
-		c += 'All animations are CSS3 animations exluding the game animations which are made in plain Javascript.\n\n';
+		c += 'All animations are CSS3 animations exluding the game animations which are made in plain Javascript. ';
 		c += 'Settings are stored in local storage. \n\n';
 		c += 'NOTE: This game is made for modern desktop browsers that support Javascript and Canvas APIs properly. ';
-		c += 'It is tested on IE10, IE11, Edge, Chrome and Firefox desktop browsers.';
+		c += 'It is tested lightly on IE10, IE11, Edge, Chrome and Firefox desktop browsers (may contain some bugs ;) ';
 
 		return c;
 	},
@@ -176,7 +176,7 @@ var SubMenu = React.createClass({
 
 var ColorPicker = React.createClass({
 	saveSettingsAndUpdateGameVisuals: function( color ) {
-		if(typeof(Storage) !== "undefined") {
+		if( typeof( Storage ) !== "undefined" ) {
 			var dom_object = this.refs.picker;
     		localStorage.setItem(dom_object.id, color);
     		window.dispatchEvent(window.RESET_GAME_EVENT);
@@ -185,9 +185,16 @@ var ColorPicker = React.createClass({
 		}	
 	},
 	componentDidMount: function() {
+		var colors_object = {
+			'top_paddle_color_pick':'000000',
+			'bottom_paddle_color_pick':'000000',
+			'ball_color_pick':'000000',
+			'top_header_color_pick':'000000',
+			'bg_color_pick':'ffffff'
+		};
 		var reactContext = this;
 		var input = this.refs.picker;	
-		var color = ( getLocalStorageValByKey( input.id ) === null ? '000000' : getLocalStorageValByKey( input.id ) );
+		var color = ( getLocalStorageValByKey( input.id ) === null ? colors_object[ input.id ] : getLocalStorageValByKey( input.id ) );
 		var picker = new jscolor( input, { value:color, onFineChange:function(){ reactContext.saveSettingsAndUpdateGameVisuals( this ); } } );
         //picker.fromHSV(360 / 100 * i, 100, 100);
  	},
