@@ -1,6 +1,5 @@
-# pong 
+# pong
 
-Simple Canvas based poing-pong game that uses React and Expressjs.
+Simple Canvas based ping-pong game that uses React and Expressjs.
 
-Author: Ari Petäjäjärvi
-copyright 2016
+2015/2016
