@@ -1,4 +1,5 @@
 define(
+  'js/game_objects',
   function () {
     this.windowW = window.innerWidth;
     this.windowH = window.innerHeight;
