@@ -6,9 +6,9 @@ define(function () {
 	this.canvas.id = 'canvas_game';
 	this.canvas.width = window.innerWidth;
 	this.canvas.height = window.innerHeight;
-
-	this.ctx = this.canvas.getContext('2d');
 	
+	this.ctx = this.canvas.getContext('2d');
+
 	this.paddles = [];
 
 	this.Ball = {
