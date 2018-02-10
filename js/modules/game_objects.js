@@ -24,7 +24,6 @@ define(function () {
 		},
 		draw: function() {
 			this.updatePos(); // update new Ball position for next frame drawing
-
 			ctx.beginPath();
 			ctx.arc( this.x, this.y, this.rad, 0, Math.PI*2, false );
 			ctx.fillStyle = this.c;
