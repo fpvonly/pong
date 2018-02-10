@@ -1,9 +1,4 @@
-/*
-	Author: Ari Petäjäjärvi
-	2016
-*/
 define(function () {
-
 	this.windowW = window.innerWidth;
 	this.windowH = window.innerHeight;
 
@@ -11,7 +6,6 @@ define(function () {
 	this.canvas.id = 'canvas_game';
 	this.canvas.width = window.innerWidth;
 	this.canvas.height = window.innerHeight;
-	//canvas.style.cursor = 'none';
 
 	this.ctx = this.canvas.getContext('2d');
 
@@ -24,25 +18,19 @@ define(function () {
 		rad:10,
 		xVs:3,
 		yVs:6,
-		updatePos: function()
-		{
+		updatePos: function()	{
 			this.x += this.xVs;
 			this.y += this.yVs;
 		},
-		draw: function()
-		{				
+		draw: function() {
 			this.updatePos(); // update new Ball position for next frame drawing
 
-			ctx.beginPath();					
-			//ctx.lineWidth = 5;			
-			//	ctx.strokeStyle = this.c;
+			ctx.beginPath();
 			ctx.arc( this.x, this.y, this.rad, 0, Math.PI*2, false );
-			//ctx.stroke();
-			ctx.fillStyle = this.c;	
-			ctx.fill();			
+			ctx.fillStyle = this.c;
+			ctx.fill();
 		},
-		reset: function()
-		{
+		reset: function() {
 			this.x = 15;
 			this.y = 25;
 			this.c = '#'+ ( getLocalStorageValByKey( 'ball_color_pick' ) === null ? '000000' : getLocalStorageValByKey( 'ball_color_pick' ) );
@@ -52,29 +40,28 @@ define(function () {
 		}
 	};
 
-	this.Paddle = function( position )
-	{
-		 this.h = 10;
-		 this.w = 150;		 
-		 this.x = windowW/2 - this.w/2;
-		 this.y = ( position == 'bottom' ) ? windowH-this.h : 0;
-		 this.position = position;
-		 this.c = '#' + ( getLocalStorageValByKey( this.position+'_paddle_color_pick' ) === null ? '000000' : getLocalStorageValByKey( this.position+'_paddle_color_pick' ) );
-		 this.hit = false;
+	this.Paddle = function(position) {
+		this.h = 10;
+		this.w = 150;
+		this.x = windowW/2 - this.w/2;
+		this.y = ( position == 'bottom' ) ? windowH-this.h : 0;
+		this.position = position;
+		this.c = '#' + ( getLocalStorageValByKey( this.position+'_paddle_color_pick' ) === null ? '000000' : getLocalStorageValByKey( this.position+'_paddle_color_pick' ) );
+		this.hit = false;
 
-		 this.reset = function() {
-		 	this.h = 10;
+		this.reset = function () {
+			this.h = 10;
 			this.w = 150;
-		 	this.x = window.innerWidth/2 - this.w/2;
-		 	this.y = (this.position == 'bottom' ) ? window.innerHeight-this.h : 0;
-		 	this.c = '#'+ ( getLocalStorageValByKey(  this.position+'_paddle_color_pick' ) === null ? '000000' : getLocalStorageValByKey(  this.position+'_paddle_color_pick' ) );
-		 }		 
+			this.x = window.innerWidth/2 - this.w/2;
+			this.y = (this.position == 'bottom' ) ? window.innerHeight-this.h : 0;
+			this.c = '#'+ ( getLocalStorageValByKey(  this.position+'_paddle_color_pick' ) === null ? '000000' : getLocalStorageValByKey(  this.position+'_paddle_color_pick' ) );
+		}
 	};
 
 	this.restartBtn = {
 		rad:150,
 		c:'#000000',
-		coords:{},		
+		coords:{},
 		mouseStatus:'OUT',
 		animInterval: null,
 		draw: function() {
@@ -82,99 +69,82 @@ define(function () {
 			ctx.fillStyle = '#000000';
 			ctx.arc( window.innerWidth/2, window.innerHeight/2, this.rad, 0, Math.PI*2, false );
 			ctx.fill();
-			
+
 			ctx.font = '20px Arial, sans-serif';
 			ctx.textAlign = 'center';
 			ctx.textBaseline = 'middle';
 			ctx.fillStyle = '#ffffff';
 			ctx.fillText('Game Over! Points: '+POINTS, window.innerWidth/2, window.innerHeight/2-15);
-			ctx.fillText('Click here to restart!', window.innerWidth/2, window.innerHeight/2+15);	
+			ctx.fillText('Click here to restart!', window.innerWidth/2, window.innerHeight/2+15);
 
-			this.coords.X_a = ( window.innerWidth/2 )	- 150;	
-			this.coords.X_b = ( window.innerWidth/2 )	+ 150;	
-			this.coords.Y_a = ( window.innerHeight/2 )	- 150;	
-			this.coords.Y_b = ( window.innerHeight/2 )	+ 150;	
-			 
+			this.coords.X_a = ( window.innerWidth/2 )	- 150;
+			this.coords.X_b = ( window.innerWidth/2 )	+ 150;
+			this.coords.Y_a = ( window.innerHeight/2 )	- 150;
+			this.coords.Y_b = ( window.innerHeight/2 )	+ 150;
+
 			//restart_btn = this; // for event handler functions
-			
+
 			canvas.removeEventListener('click', beginBtn.clickButton,false );
 			canvas.removeEventListener('click', this.clickButton,false );
 			canvas.addEventListener('click', this.clickButton, false );
-			canvas.addEventListener('mousemove', this.mouseOverBtn, false );			
+			canvas.addEventListener('mousemove', this.mouseOverBtn, false );
 		},
-		clickButton: function(e)
-		{
+		clickButton: function(e) {
 			var x = e.pageX;
 			var y = e.pageY;
-			
-			if( x >= restartBtn.coords.X_a && x <= restartBtn.coords.X_b )
-			{
-				if( y >= restartBtn.coords.Y_a && y <= restartBtn.coords.Y_b )
-				{
-					if( GAME_STATE === 'STOP' )
-					{
+
+			if( x >= restartBtn.coords.X_a && x <= restartBtn.coords.X_b ) {
+				if( y >= restartBtn.coords.Y_a && y <= restartBtn.coords.Y_b ) {
+					if( GAME_STATE === 'STOP' )	{
 						console.log('RESET EVENT');
 						canvas.removeEventListener('click', beginBtn.clickButton,false );
-						window.dispatchEvent(window.RESET_GAME_EVENT);						
+						window.dispatchEvent(window.RESET_GAME_EVENT);
 						canvas.removeEventListener('click', this.clickButton,false );
 					}
 				}
 			}
 		},
-		mouseOverBtn: function(e)
-		{
+		mouseOverBtn: function(e)	{
 			var x = e.clientX;
 			var y = e.clientY;
-						
-			if( x >= restartBtn.coords.X_a && x <= restartBtn.coords.X_b )
-			{
-				if( y >= restartBtn.coords.Y_a && y <= restartBtn.coords.Y_b )
-				{
-					if( GAME_STATE === 'STOP' )
-					{
-						//clearInterval(restartBtn.animInterval);						
-						over();				
+
+			if( x >= restartBtn.coords.X_a && x <= restartBtn.coords.X_b ) {
+				if( y >= restartBtn.coords.Y_a && y <= restartBtn.coords.Y_b ) {
+					if( GAME_STATE === 'STOP' )	{
+						//clearInterval(restartBtn.animInterval);
+						over();
 					}
-				}
-				else
-				{
-					if( GAME_STATE === 'STOP' )
-					{
-						//clearInterval(restartBtn.animInterval);						
+				}	else {
+					if( GAME_STATE === 'STOP' )	{
+						//clearInterval(restartBtn.animInterval);
 						out();
 					}
 				}
-			}
-			else
-			{
-				if( GAME_STATE === 'STOP' )
-				{
-					//clearInterval(restartBtn.animInterval);					
+			} else {
+				if( GAME_STATE === 'STOP' )	{
+					//clearInterval(restartBtn.animInterval);
 					out();
 				}
 			}
 
-			function over()
-			{
+			function over()	{
 				var count = 0;
 				var animInterval = setInterval( function() {
 					ctx.beginPath();
 					ctx.strokeStyle = '#000000';
 					ctx.fillStyle = '#000000';
 					ctx.lineWidth = 6;
-					ctx.arc( window.innerWidth/2, window.innerHeight/2, 170+(count*5), 0, Math.PI*2, false );
+					ctx.arc( window.innerWidth/2, window.innerHeight/2, 170 + (count * 5), 0, Math.PI*2, false );
 					ctx.stroke();
 					count++;
 
-					if( count >= 10 )
-					{
+					if( count >= 10 ) {
 						clearInterval( animInterval );
 					}
-				}, 1000/100);		
+				}, 1000/100);
 			}
 
-			function out()
-			{
+			function out() {
 				var count = 0;
 				var animInterval = setInterval( function() {
 					ctx.beginPath();
@@ -184,11 +154,10 @@ define(function () {
 					ctx.stroke();
 					count++;
 
-					if( count >= 10 )
-					{
+					if( count >= 10 )	{
 						clearInterval( animInterval );
 					}
-				}, 1000/100);		
+				}, 1000/100);
 			}
 		}
 	};
@@ -196,7 +165,7 @@ define(function () {
 	this.beginBtn = {
 		rad:150,
 		c:'#000000',
-		coords:{},		
+		coords:{},
 		mouseStatus:'OUT',
 		animInterval: null,
 		draw: function() {
@@ -207,37 +176,30 @@ define(function () {
 			ctx.fillStyle = '#000000';
 			ctx.arc( window.innerWidth/2, window.innerHeight/2, this.rad, 0, Math.PI*2, false );
 			ctx.fill();
-			
+
 			ctx.font = '30px Arial, sans-serif';
 			ctx.textAlign = 'center';
 			ctx.textBaseline = 'middle';
 			ctx.fillStyle = '#ffffff';
 			ctx.fillText('Start!', window.innerWidth/2, window.innerHeight/2);
 
-			this.coords.X_a = ( window.innerWidth/2 )	- 150;	
-			this.coords.X_b = ( window.innerWidth/2 )	+ 150;	
-			this.coords.Y_a = ( window.innerHeight/2 )	- 150;	
-			this.coords.Y_b = ( window.innerHeight/2 )	+ 150;	
-			 
-			//restart_btn = this; // for event handler functions
-			
+			this.coords.X_a = ( window.innerWidth/2 )	- 150;
+			this.coords.X_b = ( window.innerWidth/2 )	+ 150;
+			this.coords.Y_a = ( window.innerHeight/2 )	- 150;
+			this.coords.Y_b = ( window.innerHeight/2 )	+ 150;
+
 			canvas.removeEventListener('click', restartBtn.clickButton,false );
 			canvas.removeEventListener('click', this.clickButton,false );
 			canvas.addEventListener('click', this.clickButton,false );
-			canvas.addEventListener('mousemove', this.mouseOverBtn,false );		
-
+			canvas.addEventListener('mousemove', this.mouseOverBtn,false );
 		},
-		clickButton: function(e)
-		{
+		clickButton: function(e) {
 			var x = e.pageX;
 			var y = e.pageY;
-			
-			if( x >= beginBtn.coords.X_a && x <= beginBtn.coords.X_b )
-			{
-				if( y >= beginBtn.coords.Y_a && y <= beginBtn.coords.Y_b )
-				{
-					if( GAME_STATE === 'STOP' )
-					{
+
+			if( x >= beginBtn.coords.X_a && x <= beginBtn.coords.X_b ) {
+				if( y >= beginBtn.coords.Y_a && y <= beginBtn.coords.Y_b ) {
+					if( GAME_STATE === 'STOP' )	{
 						console.log('BEGIN EVENT');
 						window.dispatchEvent(window.BEGIN_GAME_EVENT);
 						canvas.removeEventListener('click', this.clickButton,false );
@@ -245,41 +207,30 @@ define(function () {
 				}
 			}
 		},
-		mouseOverBtn: function(e)
-		{
+		mouseOverBtn: function(e)	{
 			var x = e.clientX;
 			var y = e.clientY;
-						
-			if( x >= beginBtn.coords.X_a && x <= beginBtn.coords.X_b )
-			{
-				if( y >= beginBtn.coords.Y_a && y <= beginBtn.coords.Y_b )
-				{
-					if( GAME_STATE === 'STOP' )
-					{
-						//clearInterval(beginBtn.animInterval);						
-						over();				
+
+			if( x >= beginBtn.coords.X_a && x <= beginBtn.coords.X_b ) {
+				if( y >= beginBtn.coords.Y_a && y <= beginBtn.coords.Y_b ) {
+					if( GAME_STATE === 'STOP' )	{
+						//clearInterval(beginBtn.animInterval);
+						over();
 					}
-				}
-				else
-				{
-					if( GAME_STATE === 'STOP' )
-					{
-						//clearInterval(beginBtn.animInterval);						
+				}	else {
+					if( GAME_STATE === 'STOP' )	{
+						//clearInterval(beginBtn.animInterval);
 						out();
 					}
 				}
-			}
-			else
-			{
-				if( GAME_STATE === 'STOP' )
-				{
-					//clearInterval(beginBtn.animInterval);					
+			}	else {
+				if( GAME_STATE === 'STOP' )	{
+					//clearInterval(beginBtn.animInterval);
 					out();
 				}
 			}
 
-			function over()
-			{
+			function over()	{
 				var count = 0;
 				var animInterval = setInterval( function() {
 					ctx.beginPath();
@@ -290,15 +241,13 @@ define(function () {
 					ctx.stroke();
 					count++;
 
-					if( count >= 10 )
-					{
+					if( count >= 10 )	{
 						clearInterval( animInterval );
 					}
-				}, 1000/100);		
+				}, 1000/100);
 			}
 
-			function out()
-			{
+			function out() {
 				var count = 0;
 				var animInterval = setInterval( function() {
 					ctx.beginPath();
@@ -308,11 +257,10 @@ define(function () {
 					ctx.stroke();
 					count++;
 
-					if( count >= 10 )
-					{
+					if( count >= 10 )	{
 						clearInterval( animInterval );
 					}
-				}, 1000/100);		
+				}, 1000/100);
 			}
 		}
 	};
