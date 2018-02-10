@@ -1,12 +1,12 @@
 define(
 	function () {
-		this.windowW = window.innerWidth;
-		this.windowH = window.innerHeight;
+    this.windowW = window.innerWidth;
+    this.windowH = window.innerHeight;
 
-		this.canvas = document.createElement('canvas');
-		this.canvas.id = 'canvas_game';
-		this.canvas.width = window.innerWidth;
-		this.canvas.height = window.innerHeight;
+    this.canvas = document.createElement('canvas');
+    this.canvas.id = 'canvas_game';
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
 
 		this.ctx = this.canvas.getContext('2d');
 
