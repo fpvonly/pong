@@ -11,7 +11,7 @@
 })();
 
 // helper function for accessing local storage data
-var getLocalStorageValByKey = function( key ) {
+window.getLocalStorageValByKey = function( key ) {
   if( typeof( Storage ) !== "undefined" ) {
     return localStorage.getItem(key);
   } else {
@@ -300,5 +300,5 @@ var Pong = function( prop ) {
       cancelRequestFrame( initGameAnimation );
       beginBtn.draw();
     }
-	}
+  }
 }
