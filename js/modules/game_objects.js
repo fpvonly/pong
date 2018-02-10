@@ -8,7 +8,7 @@ define(function () {
 	this.canvas.height = window.innerHeight;
 
 	this.ctx = this.canvas.getContext('2d');
-
+	
 	this.paddles = [];
 
 	this.Ball = {
